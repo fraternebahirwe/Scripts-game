@@ -1,0 +1,239 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --dark: #050816;
+  --violet: #8b5cf6;
+  --pink: #ff4ecd;
+  --orange: #ffb347;
+  --glass: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.15);
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Poppins", "Roboto", sans-serif;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background:
+    radial-gradient(circle at top left, #2b1b75, transparent 30%),
+    radial-gradient(circle at top right, #ff8c32, transparent 25%),
+    linear-gradient(135deg, var(--dark), #0b102f, #1b0b3a);
+}
+
+header {
+  text-align: center;
+  margin-top: 40px;
+}
+
+h1 {
+  font-size: clamp(45px, 8vw, 85px);
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--orange), var(--pink), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 35px rgba(255, 76, 205, 0.35);
+}
+
+h2 {
+  font-size: clamp(24px, 4vw, 38px);
+  margin: 15px 0;
+}
+
+h3 {
+  color: #d6d9ff;
+  font-weight: 400;
+}
+
+main {
+  width: min(92%, 1050px);
+  margin: 40px 0;
+  padding: clamp(25px, 5vw, 45px);
+  text-align: center;
+  border-radius: 32px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(22px);
+  box-shadow: 0 0 45px rgba(139, 92, 246, 0.35);
+}
+
+.optionSource {
+  margin: 25px 0;
+}
+
+.optionSource label {
+  margin: 0 15px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+input[type="radio"] {
+  accent-color: var(--pink);
+  transform: scale(1.15);
+}
+
+.zoneProposition {
+  margin: 30px 0 20px;
+  padding: 30px;
+  border-radius: 22px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 2px solid rgba(255, 179, 71, 0.65);
+  box-shadow: 0 0 25px rgba(255, 76, 205, 0.3);
+  font-size: clamp(35px, 6vw, 55px);
+  font-weight: 800;
+}
+
+.zoneSaisie {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 100%;
+  height: 64px;
+  padding: 0 22px;
+  border: 2px solid rgba(255, 76, 205, 0.7);
+  border-radius: 16px;
+  outline: none;
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+input::placeholder {
+  color: #969bd3;
+}
+
+button {
+  min-width: 160px;
+  height: 64px;
+  border: none;
+  border-radius: 16px;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--orange), var(--pink), var(--violet));
+  box-shadow: 0 0 25px rgba(255, 76, 205, 0.45);
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 40px rgba(255, 76, 205, 0.75);
+}
+
+.zoneScore {
+  padding: 20px;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.35);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+footer {
+  width: 100%;
+  padding: 28px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(15px);
+  font-weight: 600;
+}
+
+@media (max-width: 800px) {
+  .zoneSaisie {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+
+
+/* POPUP */
+
+.popupBackground {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popupBackground.active {
+  display: flex;
+}
+
+
+.popup {
+  width: min(90%, 380px);
+  padding: 25px;
+  border-radius: 24px;
+  text-align: center;
+  color: white;
+  background: linear-gradient(135deg, var(--orange), var(--pink));
+  box-shadow: 0 0 40px rgba(255, 76, 205, 0.6);
+}
+
+.popup > div {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.popup form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.popup label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.popup input {
+  height: 42px;
+  border-radius: 10px;
+  border: none;
+  padding: 0 12px;
+  background: white;
+  color: #222;
+  font-size: 15px;
+}
+
+.popup button {
+  width: 100%;
+  height: 45px;
+  margin-top: 8px;
+  background: white;
+  color: var(--pink);
+  box-shadow: none;
+}
+
+.popup button:hover {
+  color: var(--violet);
+  transform: translateY(-2px);
+}
+
+#erreur-message {
+    display: block;
+    color: white;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 18px;
+}
