@@ -17,12 +17,11 @@ body {
   font-family: "Poppins", "Roboto", sans-serif;
   color: white;
   display: flex;
-    flex-direction: column;
-
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   background:
-    radial-gradient(circle at top left, #2b1b75, transparent 30%),
+    radial-gradient(circle at top left, #080513, transparent 70%),
     radial-gradient(circle at top right, #ff8c32, transparent 25%),
     linear-gradient(135deg, var(--dark), #0b102f, #1b0b3a);
 }
