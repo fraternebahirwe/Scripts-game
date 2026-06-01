@@ -1,224 +1,89 @@
-// Fonction qui affiche le score du joueur à l'écran
-// score = nombre de bonnes réponses
-// nbMotsProposes = nombre total de mots déjà proposés
-function afficherResultat(score, nbMotsProposes) {
-
-    // On sélectionne le span situé dans .zoneScore
-    let spanScore = document.querySelector(".zoneScore span");
-
-    // On modifie le texte du span avec le score actuel
-    spanScore.innerText = `${score} / ${nbMotsProposes}`;
+function afficherResultat(score, total) {
+  document.querySelector(".zoneScore span").innerText = `${score} / ${total}`;
 }
 
-
-// Fonction qui affiche le mot ou la phrase à taper
-function afficherProposition(proposition) {
-
-    // On récupère la zone où le mot doit apparaître
-    let zoneProposition = document.querySelector(".zoneProposition");
-
-    // On affiche la proposition dans cette zone
-    zoneProposition.innerText = proposition;
+function afficherProposition(texte) {
+  document.querySelector(".zoneProposition").innerText = texte;
 }
 
-
-// Fonction qui prépare automatiquement un email de partage du score
-function afficherEmail(nom, email, score) {
-
-    // Sujet de l'email
-    let sujet = "Partage du score Speed Typing ⚡️";
-
-    // Contenu du message de l'email
-    let message = `Salut, je suis ${nom} et je viens de réaliser le score ${score} sur Speed Typing !`;
-
-    // Création d'un lien mailto
-    // encodeURIComponent permet de sécuriser les espaces et caractères spéciaux
-    let mailto = `mailto:${email}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(message)}`;
-
-    // Ouvre automatiquement l'application mail de l'utilisateur
-    window.location.href = mailto;
+function afficherMessageErreur(message) {
+  document.getElementById("erreur-message").innerText = message;
 }
 
+function ouvrirEmail(nom, email, score) {
+  const sujet = "Partage du score Speed Typing ⚡️";
+  const message = `Salut, je suis ${nom} et je viens de réaliser le score ${score} sur Speed Typing !`;
 
-// Fonction qui vérifie si le nom est valide
-function validerNom(nom) {
-
-    // Si le nom contient moins de 3 caractères
-    if (nom.length < 3) {
-
-        // On déclenche une erreur personnalisée
-        throw new Error("Votre nom est trop court.");
-    }
+  window.location.href =
+    `mailto:${email}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(message)}`;
 }
 
-
-// Fonction qui vérifie si l'email est valide
-function validerEmail(email) {
-
-    // includes("@") vérifie si le texte contient le caractère @
-    // ! inverse la réponse
-    // Donc ici : "si l'email ne contient PAS @"
-    if (!email.includes("@")) {
-
-        // On déclenche une erreur
-        throw new Error("L'email n'est pas valide.");
-    }
-}
-
-
-// Fonction qui affiche un message d'erreur sous le bouton Envoyer
-function afficherMessageErreur(messageErreur) {
-
-    // On récupère la zone destinée aux erreurs
-    let zoneErreur = document.getElementById("erreur-message");
-
-    // On affiche le message d'erreur dans cette zone
-    zoneErreur.innerText = messageErreur;
-}
-
-
-// Fonction principale qui lance le jeu
 function lancerJeu() {
+  let score = 0;
+  let index = 0;
+  let propositions = listeMots;
 
-    // Variable contenant le score du joueur
-    let score = 0;
+  const boutonValider = document.getElementById("btnValiderMot");
+  const input = document.getElementById("inputEcriture");
+  const form = document.querySelector(".popup form");
+  const radios = document.querySelectorAll(".optionSource input");
 
-    // Variable contenant l'index du mot actuel
-    let i = 0;
+  afficherProposition(propositions[index]);
+  afficherResultat(score, index);
 
-    // Liste des mots utilisée par défaut
-    let listeProposition = listeMots;
+  boutonValider.addEventListener("click", () => {
+    const reponseUtilisateur = input.value.trim().toLowerCase();
+    const bonneReponse = propositions[index].trim().toLowerCase();
 
-
-    // Sélection du bouton Valider
-    let btnValiderMot = document.getElementById("btnValiderMot");
-
-    // Sélection du champ où l'utilisateur écrit
-    let inputEcriture = document.getElementById("inputEcriture");
-
-    // Sélection du formulaire de partage
-    let form = document.querySelector(".popup form");
-
-
-    // Affiche le premier mot
-    afficherProposition(listeProposition[i]);
-
-    // Affiche le score de départ
-    afficherResultat(score, i);
-
-
-    // Événement lancé lorsque le joueur clique sur le bouton Valider
-    btnValiderMot.addEventListener("click", () => {
-
-        // Vérifie si le texte écrit est identique au mot demandé
-        // trim() enlève les espaces inutiles
-        // toLowerCase() transforme tout en minuscules
-        if (
-            inputEcriture.value.trim().toLowerCase() ===
-            listeProposition[i].trim().toLowerCase()
-        ) {
-
-            // Si la réponse est correcte, on ajoute 1 point
-            score++;
-        }
-
-        // Passe au mot suivant
-        i++;
-
-        // Met à jour le score à l'écran
-        afficherResultat(score, i);
-
-        // Vide le champ de saisie
-        inputEcriture.value = "";
-
-
-        // Vérifie si la liste est terminée
-        if (listeProposition[i] === undefined) {
-
-            // Affiche un message de fin
-            afficherProposition("⌨️ Repose tes doigts champion ,🚀 Tu progresses vite !⚡️");
-
-            // Désactive le bouton Valider
-            btnValiderMot.disabled = true;
-
-        } else {
-
-            // Sinon affiche le mot suivant
-            afficherProposition(listeProposition[i]);
-        }
-    });
-
-
-    // Sélection de tous les boutons radio
-    let listeBtnRadio = document.querySelectorAll(".optionSource input");
-
-
-    // Boucle sur chaque bouton radio
-    for (let index = 0; index < listeBtnRadio.length; index++) {
-
-        // Détection du changement d'option
-        listeBtnRadio[index].addEventListener("change", (event) => {
-
-            // Si l'utilisateur choisit "Mots"
-            if (event.target.value === "1") {
-
-                // On utilise la liste des mots
-                listeProposition = listeMots;
-
-            } else {
-
-                // Sinon on utilise la liste des phrases
-                listeProposition = listePhrases;
-            }
-
-
-            // Réaffiche la proposition actuelle
-            afficherProposition(listeProposition[i]);
-
-            // Met à jour le score affiché
-            afficherResultat(score, i);
-        });
+    if (reponseUtilisateur === bonneReponse) {
+      score++;
     }
 
+    index++;
+    input.value = "";
 
-    // Événement déclenché lors de l'envoi du formulaire
-    form.addEventListener("submit", (event) => {
+    afficherResultat(score, index);
 
-        // Empêche le rechargement automatique de la page
-        event.preventDefault();
+    if (index >= propositions.length) {
+      afficherProposition("⌨️ Repose tes doigts champion, tu progresses vite 🚀");
+      boutonValider.disabled = true;
+      return;
+    }
 
-        // try permet d'essayer un bloc de code
-        // si une erreur apparaît, le catch la récupère
-        try {
+    afficherProposition(propositions[index]);
+  });
 
-            // Récupère le nom écrit par l'utilisateur
-            let nom = document.getElementById("nom").value.trim();
+  radios.forEach((radio) => {
+    radio.addEventListener("change", (event) => {
+      propositions = event.target.value === "1" ? listeMots : listePhrases;
 
-            // Récupère l'email écrit par l'utilisateur
-            let email = document.getElementById("email").value.trim();
+      score = 0;
+      index = 0;
+      boutonValider.disabled = false;
 
-
-            // Vérifie si le nom est valide
-            validerNom(nom);
-
-            // Vérifie si l'email est valide
-            validerEmail(email);
-
-
-            // Efface les anciens messages d'erreur
-            afficherMessageErreur("");
-
-
-            // Prépare le score à envoyer
-            let scoreEmail = `${score} / ${i}`;
-
-            // Lance l'ouverture de l'email
-            afficherEmail(nom, email, scoreEmail);
-
-        } catch (erreur) {
-
-            // Si une erreur apparaît, on affiche son message
-            afficherMessageErreur(erreur.message);
-        }
+      afficherProposition(propositions[index]);
+      afficherResultat(score, index);
     });
+  });
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const nom = document.getElementById("nom").value.trim();
+    const email = document.getElementById("email").value.trim();
+
+    if (nom.length < 3) {
+      afficherMessageErreur("Votre nom est trop court.");
+      return;
+    }
+
+    if (!email.includes("@")) {
+      afficherMessageErreur("L'email n'est pas valide.");
+      return;
+    }
+
+    afficherMessageErreur("");
+
+    ouvrirEmail(nom, email, `${score} / ${index}`);
+  });
 }
