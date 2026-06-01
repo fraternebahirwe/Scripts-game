@@ -46,8 +46,7 @@ h2 {
 }
 
 main {
-  width: min(92%, 1050px);
-  margin: 40px 0;
+  width: 1050px;
   padding: clamp(25px, 5vw, 45px);
   text-align: center;
   border-radius: 32px;
