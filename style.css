@@ -5,20 +5,20 @@
 }
 
 :root {
-  --dark: #050816;
-  --violet: #8b5cf6;
-  --pink: #ff4ecd;
-  --orange: #ffb347;
-  --glass: rgba(255, 255, 255, 0.08);
-  --border: rgba(255, 255, 255, 0.15);
+  --dark: #000000;
+  --violet: #9483a8;
+  --pink: #857a99a7;
+  --orange: #d27b00;
+  --glass: rgba(109, 94, 94, 0);
+  --border: rgba(55, 39, 39, 0.15);
 }
 
 body {
-  min-height: 100vh;
   font-family: "Poppins", "Roboto", sans-serif;
   color: white;
   display: flex;
-  flex-direction: column;
+    flex-direction: column;
+
   align-items: center;
   justify-content: space-between;
   background:
