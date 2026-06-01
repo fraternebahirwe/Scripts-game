@@ -32,7 +32,7 @@ header {
 }
 
 h1 {
-  font-size: clamp(45px, 8vw, 85px);
+  font-size:85px;
   font-weight: 900;
   background: linear-gradient(90deg, var(--orange), var(--pink), var(--violet));
   -webkit-background-clip: text;
