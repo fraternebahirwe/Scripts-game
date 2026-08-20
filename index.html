@@ -3,75 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- Inclusion du fichier css pour le style du jeu -->
+    <title>Speed Typing ⚡️ - Jeu de Dactylographie</title>
+
+    <!-- SEO & Open Graph Meta Tags -->
+    <meta name="description" content="Speed Typing est une application web interactive pour tester et améliorer votre vitesse d'écriture en tapant des mots et des phrases en français.">
+    <meta name="author" content="Fraterne Bahirwe">
+    <meta property="og:title" content="Speed Typing ⚡️">
+    <meta property="og:description" content="Testez et améliorez votre vitesse de frappe au clavier avec ce jeu interactif.">
+    <meta property="og:type" content="website">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Inclusion des 3 scripts nécessaires pour faire fonctionner le jeu -->
-    <!-- Attention, l'ordre des fichiers js est important.  -->
+    <!-- JavaScript Scripts -->
     <script src="config.js" defer></script>
     <script src="popup.js" defer></script>
     <script src="script.js" defer></script>
     <script src="main.js" defer></script>
 </head>
 <body>
+
     <!-- HEADER -->
     <header>
         <h1>Speed Typing ⚡️</h1>
         <h2>L'application pour écrire plus vite !</h2>
     </header>
 
-    <!-- MAIN -->
-    <main>
+    <!-- MAIN CONTENT -->
+    <main class="container">
         <div class="zoneOptions">
-            <p>Choisissez votre option et tapez la proposition qui s'affiche dans le champ en-dessous.</p>
-            <div class="optionSource">
+            <p>Choisissez votre option et tapez la proposition qui s'affiche dans le champ ci-dessous :</p>
+            <fieldset class="optionSource">
+                <legend class="visually-hidden">Mode de jeu</legend>
+                
                 <input type="radio" name="optionSource" id="mots" value="1" checked>
                 <label for="mots">Mots</label>
+                
                 <input type="radio" name="optionSource" id="phrases" value="2">
                 <label for="phrases">Phrases</label>
-            </div>
+            </fieldset>
         </div>
 
-        <div class="zoneProposition"></div>
+        <div class="zoneProposition" aria-live="polite" aria-label="Mot ou phrase à recopier"></div>
 
         <div class="zoneSaisie">
-            <input type="text" id="inputEcriture" name="inputEcriture" placeholder="Tapez ici">
-            <button id="btnValiderMot">Valider</button>
+            <label for="inputEcriture" class="visually-hidden">Zone de saisie</label>
+            <input type="text" id="inputEcriture" name="inputEcriture" placeholder="Tapez ici..." autocomplete="off" autofocus>
+            <button type="button" id="btnValiderMot">Valider</button>
         </div>
 
         <div class="zoneScore">
-            Votre score : <span></span>
+            Votre score : <span id="score">0</span>
         </div>
 
         <div class="zonePartage">
-           <button type="button">Partager</button>
+            <button type="button" id="btnPartager">Partager</button>
         </div>
-        
     </main>
 
     <!-- FOOTER -->
     <footer>
-        @Copyright: Fraterne Bahirwe
+        <p>&copy; 2026 Fraterne Bahirwe. Tous droits réservés.</p>
     </footer>
 
-    <!-- Popup de partage -->
-    <div class="popupBackground">
-        <div class="popup">
-            <div>Partagez votre score</div>
-            <form>
+    <!-- POPUP DE PARTAGE -->
+    <div class="popupBackground" aria-hidden="true">
+        <div class="popup" role="dialog" aria-modal="true" aria-labelledby="popupTitle">
+            <h3 id="popupTitle">Partagez votre score</h3>
+            <form id="formPartage" novalidate>
                 <label for="nom">Votre nom</label>
-                <input type="text" id="nom" name="nom" placeholder="Votre nom">
+                <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
 
                 <label for="email">Avec qui voulez-vous partager votre score ?</label>
-                <input type="email" id="email" name="email" placeholder="nom@domaine.com">
+                <input type="email" id="email" name="email" placeholder="nom@domaine.com" required>
 
                 <button type="submit" id="btnEnvoyerMail">Envoyer</button>   
-                <span id="erreur-message"> </span> 
-                       
-             </form>
+                <span id="erreur-message" role="alert"></span> 
+            </form>
         </div>
     </div>
 
 </body>
-</html> 
+</html>
